@@ -21,12 +21,12 @@ public class Movimento
 
     public void ConfigurazionePercorso(float velocita)
     {
-        sequenza.Append(transform_entity.DOPath(destinazioni, velocita, PathType.Linear, PathMode.Full3D, 1, Color.red).OnWaypointChange(GuardaProssimaDestinazione));
+        sequenza.Append(transform_entity.DOPath(destinazioni, velocita, PathType.Linear, PathMode.Full3D, 1).OnWaypointChange(GuardaProssimaDestinazione));
     }
 
     private void GuardaProssimaDestinazione(int waypoint)
     {
-        if (waypoint + 1 < destinazioni.Length)
+        if (waypoint < destinazioni.Length)
         {
             transform_entity.DOLookAt(destinazioni[waypoint], 0.2f);
         }

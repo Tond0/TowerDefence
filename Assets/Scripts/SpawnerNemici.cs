@@ -54,4 +54,14 @@ public class SpawnerNemici : MonoBehaviour
             yield return new WaitForSeconds(tempo_pausa_spawn);
         }
     }
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.yellow;
+        for(int i = 0; i < destinazioni.Length - 1; i++)
+        {
+            Gizmos.DrawLine(destinazioni[i].position, destinazioni[i+1].position);
+
+        }
+    }
 }
