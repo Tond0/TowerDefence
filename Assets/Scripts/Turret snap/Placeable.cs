@@ -8,12 +8,12 @@ public class Placeable : MonoBehaviour
 
     private void OnMouseDown()
     {
-        offset = transform.position - PlacingSystem.GetMouseWorldPosition();
+        offset = transform.position - PlacingSystem.current.GetMouseWorldPosition();
     }
 
     private void OnMouseDrag()
     {
-        Vector3 pos = PlacingSystem.GetMouseWorldPosition() + offset;
+        Vector3 pos = PlacingSystem.current.GetMouseWorldPosition() + offset;
         transform.position = PlacingSystem.current.SnapCoordinateToGrid(pos);
     }
 }

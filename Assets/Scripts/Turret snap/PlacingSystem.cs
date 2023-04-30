@@ -10,6 +10,8 @@ public class PlacingSystem : MonoBehaviour
     public GridLayout gridLayout;
     private Grid grid;
 
+    [SerializeField] private LayerMask mouseableMask;
+
     [SerializeField] private Tilemap mainTilemap;
     [SerializeField] private TileBase placePreview;
 
@@ -40,10 +42,10 @@ public class PlacingSystem : MonoBehaviour
         }
     }
 
-    public static Vector3 GetMouseWorldPosition()
+    public Vector3 GetMouseWorldPosition()
     {
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        if(Physics.Raycast(ray, out RaycastHit raycastHit))
+        if(Physics.Raycast(ray, out RaycastHit raycastHit, 100, mouseableMask))
         {
             return raycastHit.point;
         }
