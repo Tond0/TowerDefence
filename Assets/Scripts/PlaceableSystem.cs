@@ -11,7 +11,7 @@ public class PlaceableSystem : MonoBehaviour
 {
     [SerializeField] private Tilemap main_tilemap;
 
-    [SerializeField] private GameObject selectedObj;
+    private GameObject selectedObj;
     [SerializeField] private Tile previewTile;
 
     [SerializeField] private List<GameObject> placeableObjects;
@@ -25,21 +25,8 @@ public class PlaceableSystem : MonoBehaviour
         cellPosition = main_tilemap.WorldToCell(pos);
         return main_tilemap.GetCellCenterWorld(cellPosition);
     }
-
-    public void PaintCell(Tile newTile)
-    {
-        main_tilemap.SetTile(cellPosition, newTile);
-    }
     #endregion
 
-    private void OnEnable()
-    {
-        #region SetUpPreviewObj
-        placeableObjects.Insert(0, null);
-        
-        //selectedObj = placeableObjects[0];
-        #endregion
-    }
 
     private Vector3 previousCellLocation;
     private void Update()
@@ -47,10 +34,12 @@ public class PlaceableSystem : MonoBehaviour
         #region PreviewTile
         main_tilemap.SetTile(main_tilemap.WorldToCell(previousCellLocation), null);
 
-        previousCellLocation = GetCellPosition(InputSystem.current.ReadMouse(placeableMask));
-
-        if(previousCellLocation != Vector3.zero)
+        var mouseLocation = InputSystem.current.ReadMouse(placeableMask);
+        if (mouseLocation != Vector3.zero)
+        {
+            previousCellLocation = GetCellPosition(InputSystem.current.ReadMouse(placeableMask));
             main_tilemap.SetTile(main_tilemap.WorldToCell(previousCellLocation), previewTile);
+        }
         #endregion
 
         if (InputSystem.current.ReadInteractButton() && selectedObj != null)
@@ -64,12 +53,20 @@ public class PlaceableSystem : MonoBehaviour
             {
             }
             */
+
             //Snap
-            selectedObj.transform.position = InputSystem.current.ReadMouse(placeableMask) + Vector3.up;
-            
+            selectedObj.transform.position = GetCellPosition(InputSystem.current.ReadMouse(placeableMask) + Vector3.up);
+
             selectedObj = null;
         }
     }
+    
+    //Detecta se sulla cella puntata si trova già un'oggetto posizionato
+    /*private bool ObjectDetection()
+    {
+        return Physics.
+    }
+    */
 
     public void SetTorretta(GameObject torretta)
     {
@@ -78,7 +75,8 @@ public class PlaceableSystem : MonoBehaviour
 
     private void FollowMouse()
     {
-        selectedObj.transform.DOMove(GetCellPosition(InputSystem.current.ReadMouse(placeableMask) + Vector3.up), 0.1f, true);
+        selectedObj.transform.position =  GetCellPosition(InputSystem.current.ReadMouse(placeableMask) + Vector3.up);
+        //Debug.LogWarning(GetCellPosition(InputSystem.current.ReadMouse(placeableMask) + Vector3.up));
     }
 
     private void PlaceObj()

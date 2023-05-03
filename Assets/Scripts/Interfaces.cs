@@ -3,11 +3,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public interface ITurret
+public interface IShoot
 {
-    public GameObject proiettile { get; set; }
+    public GameObject proiettile { get; }
 
-    public Color coloreTorretta { get; set; }
+    public Color coloreTorretta { get; }
 
     public void Shoot();
 }

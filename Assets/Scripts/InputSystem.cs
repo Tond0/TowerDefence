@@ -34,8 +34,10 @@ public class InputSystem : MonoBehaviour
     {
         Ray mouseRay = Camera.main.ScreenPointToRay(Input.mousePosition);
 
-        if (Physics.Raycast(mouseRay, out RaycastHit hit, 100, mask))
+        if (Physics.Raycast(mouseRay, out RaycastHit hit, 100, mask) && hit.transform.gameObject.layer != 5)
+        {
             return hit.point;
+        }
         else
             return Vector3.zero;
     }
