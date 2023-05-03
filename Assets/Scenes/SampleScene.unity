@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657874, g: 0.49641275, b: 0.5748172, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657826, g: 0.49641263, b: 0.57481676, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -123,6 +123,60 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &6897548
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6897550}
+  - component: {fileID: 6897549}
+  m_Layer: 0
+  m_Name: PlaceableSystem
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &6897549
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6897548}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b244def42cfac649b30816f29594727, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  main_tilemap: {fileID: 1991806259}
+  selectedObj: {fileID: 0}
+  previewTile: {fileID: 11400000, guid: f50a006fa45439d449caa5e671883ebd, type: 2}
+  placeableObjects:
+  - {fileID: 5672146084578347430, guid: 0e4a12a6ce458f444911a9e6b2483b12, type: 3}
+  placeableMask:
+    serializedVersion: 2
+    m_Bits: 64
+  objMask:
+    serializedVersion: 2
+    m_Bits: 128
+--- !u!4 &6897550
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6897548}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 11
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &7839238
 GameObject:
   m_ObjectHideFlags: 0
@@ -172,6 +226,7 @@ GameObject:
   - component: {fileID: 24774581}
   - component: {fileID: 24774583}
   - component: {fileID: 24774582}
+  - component: {fileID: 24774584}
   m_Layer: 5
   m_Name: Torretta 3
   m_TagString: Untagged
@@ -237,6 +292,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 24774580}
   m_CullTransparentMesh: 1
+--- !u!114 &24774584
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 24774580}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Delegates: []
 --- !u!1 &91861509
 GameObject:
   m_ObjectHideFlags: 0
@@ -441,7 +509,6 @@ GameObject:
   m_Component:
   - component: {fileID: 209776437}
   - component: {fileID: 209776436}
-  - component: {fileID: 209776438}
   m_Layer: 0
   m_Name: Grid
   m_TagString: Untagged
@@ -457,7 +524,7 @@ Grid:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 209776435}
   m_Enabled: 1
-  m_CellSize: {x: 1, y: 1, z: 0}
+  m_CellSize: {x: 4, y: 4, z: 0}
   m_CellGap: {x: 0, y: 0, z: 0}
   m_CellLayout: 0
   m_CellSwizzle: 1
@@ -476,26 +543,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &209776438
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 209776435}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9e7a491e02f53194d8ad69b1e4f597ed, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  gridLayout: {fileID: 209776436}
-  mouseableMask:
-    serializedVersion: 2
-    m_Bits: 192
-  mainTilemap: {fileID: 1991806259}
-  placePreview: {fileID: 11400000, guid: f50a006fa45439d449caa5e671883ebd, type: 2}
-  prefab1: {fileID: 5672146084578347430, guid: 0e4a12a6ce458f444911a9e6b2483b12, type: 3}
-  prefab2: {fileID: 0}
 --- !u!1 &424538513
 GameObject:
   m_ObjectHideFlags: 0
@@ -923,10 +970,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0cd44c1031e13a943bb63640046fad76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_UiScaleMode: 0
+  m_UiScaleMode: 1
   m_ReferencePixelsPerUnit: 100
   m_ScaleFactor: 1
-  m_ReferenceResolution: {x: 800, y: 600}
+  m_ReferenceResolution: {x: 1920, y: 1080}
   m_ScreenMatchMode: 0
   m_MatchWidthOrHeight: 0
   m_PhysicalUnit: 3
@@ -1017,6 +1064,7 @@ GameObject:
   - component: {fileID: 723318072}
   - component: {fileID: 723318074}
   - component: {fileID: 723318073}
+  - component: {fileID: 723318075}
   m_Layer: 5
   m_Name: Torretta 1
   m_TagString: Untagged
@@ -1082,6 +1130,35 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 723318071}
   m_CullTransparentMesh: 1
+--- !u!114 &723318075
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 723318071}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Delegates:
+  - eventID: 13
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 6897549}
+          m_TargetAssemblyTypeName: PlaceableSystem, Assembly-CSharp
+          m_MethodName: SetTorretta
+          m_Mode: 2
+          m_Arguments:
+            m_ObjectArgument: {fileID: 5672146084578347430, guid: 0e4a12a6ce458f444911a9e6b2483b12, type: 3}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
 --- !u!1 &804046771
 GameObject:
   m_ObjectHideFlags: 0
@@ -1094,6 +1171,7 @@ GameObject:
   - component: {fileID: 804046774}
   - component: {fileID: 804046773}
   - component: {fileID: 804046775}
+  - component: {fileID: 804046776}
   m_Layer: 5
   m_Name: Panel
   m_TagString: Untagged
@@ -1179,6 +1257,47 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &804046776
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 804046771}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Delegates:
+  - eventID: 1
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 804046775}
+          m_TargetAssemblyTypeName: UnityEngine.Animator, UnityEngine
+          m_MethodName: SetTrigger
+          m_Mode: 5
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: CloseMenu
+            m_BoolArgument: 1
+          m_CallState: 2
+        - m_Target: {fileID: 1013085105}
+          m_TargetAssemblyTypeName: UnityEngine.UI.Graphic, UnityEngine.UI
+          m_MethodName: set_raycastTarget
+          m_Mode: 6
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 1
+          m_CallState: 2
 --- !u!1 &897110427
 GameObject:
   m_ObjectHideFlags: 0
@@ -1447,6 +1566,52 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 903601523}
   m_CullTransparentMesh: 1
+--- !u!1 &960277543
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 960277545}
+  - component: {fileID: 960277544}
+  m_Layer: 0
+  m_Name: Managers
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &960277544
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 960277543}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ec755521e5305dc4db5e0c3744cfbd2c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tasti:
+    spawnTurret: 97
+    interactButton: 323
+--- !u!4 &960277545
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 960277543}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.20740011, y: 1.3229403, z: -0.56437224}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 12
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1013085102
 GameObject:
   m_ObjectHideFlags: 0
@@ -1482,8 +1647,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -443.0954}
-  m_SizeDelta: {x: 0, y: -886.1908}
+  m_AnchoredPosition: {x: 0, y: -466.42917}
+  m_SizeDelta: {x: 0, y: -932.858}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1013085104
 MonoBehaviour:
@@ -1514,20 +1679,16 @@ MonoBehaviour:
             m_StringArgument: OpenMenu
             m_BoolArgument: 0
           m_CallState: 2
-  - eventID: 1
-    callback:
-      m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 804046775}
-          m_TargetAssemblyTypeName: UnityEngine.Animator, UnityEngine
-          m_MethodName: SetTrigger
-          m_Mode: 5
+        - m_Target: {fileID: 1013085105}
+          m_TargetAssemblyTypeName: UnityEngine.UI.Graphic, UnityEngine.UI
+          m_MethodName: set_raycastTarget
+          m_Mode: 6
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
             m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
             m_IntArgument: 0
             m_FloatArgument: 0
-            m_StringArgument: CloseMenu
+            m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
 --- !u!114 &1013085105
@@ -2191,6 +2352,7 @@ GameObject:
   - component: {fileID: 1744142238}
   - component: {fileID: 1744142237}
   - component: {fileID: 1744142236}
+  - component: {fileID: 1744142239}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -2263,6 +2425,22 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 55, y: 0, z: 0}
+--- !u!114 &1744142239
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1744142235}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c49b4cc203aa6414fae5c798d1d0e7d6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_EventMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_MaxRayIntersections: 0
 --- !u!1 &1991806256
 GameObject:
   m_ObjectHideFlags: 0
@@ -2364,29 +2542,29 @@ Tilemap:
   m_TileMatrixArray:
   - m_RefCount: 0
     m_Data:
-      e00: 0
-      e01: 1.1180615e+35
-      e02: 4.728884e-10
-      e03: 2.07963
-      e10: 0
-      e11: 4.5905e-41
-      e12: 9e-43
-      e13: 8.97e-43
-      e20: 1.3386788e+33
-      e21: -33121328
-      e22: -33119488
-      e23: -33119488
-      e30: 4.5905e-41
-      e31: 2.72e-43
-      e32: 2.72e-43
-      e33: 2.72e-43
+      e00: -1.084227e-19
+      e01: -1.527391e+13
+      e02: 1.1037691e-19
+      e03: 3.8575687
+      e10: 7.23e-43
+      e11: 4.5904e-41
+      e12: 7.26e-43
+      e13: 7.23e-43
+      e20: 6e-45
+      e21: -1.8365178e-16
+      e22: -1.8364013e-16
+      e23: -1.8364013e-16
+      e30: 0
+      e31: 3.31e-43
+      e32: 3.31e-43
+      e33: 3.31e-43
   m_TileColorArray:
   - m_RefCount: 0
     m_Data: {r: 4.728884e-10, g: 4.728884e-10, b: 4.728884e-10, a: 4.728884e-10}
   - m_RefCount: 0
     m_Data: {r: 0, g: 0, b: 0, a: 0}
   - m_RefCount: 0
-    m_Data: {r: 4.728884e-10, g: 4.728884e-10, b: 4.728884e-10, a: 4.728884e-10}
+    m_Data: {r: 1.1037691e-19, g: 1.1037691e-19, b: 1.1037691e-19, a: 1.1037691e-19}
   m_TileObjectToInstantiateArray: []
   m_AnimationFrameRate: 1
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -2586,6 +2764,7 @@ GameObject:
   - component: {fileID: 2103699312}
   - component: {fileID: 2103699314}
   - component: {fileID: 2103699313}
+  - component: {fileID: 2103699315}
   m_Layer: 5
   m_Name: Torretta 2
   m_TagString: Untagged
@@ -2651,6 +2830,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2103699311}
   m_CullTransparentMesh: 1
+--- !u!114 &2103699315
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2103699311}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Delegates: []
 --- !u!1 &2116365305
 GameObject:
   m_ObjectHideFlags: 0
