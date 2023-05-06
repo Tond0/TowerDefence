@@ -11,6 +11,9 @@ public class PlaceableSystem : MonoBehaviour
 {
     [SerializeField] private Tilemap main_tilemap;
 
+    [SerializeField] private GameObject torretta;
+    [SerializeField] private GameObject buffer;
+
     [SerializeField] private GameObject selectedObj;
     [SerializeField] private Tile previewTile;
 
@@ -58,11 +61,12 @@ public class PlaceableSystem : MonoBehaviour
         }
         else if (InputSystem.current.ReadInteractButtonUp() && selectedObj != null)
         {
-            /*
+            
             if(GetCellPosition(InputSystem.current.ReadMouse(placeableMask)) != Vector3.zero)
             {
+                selectedObj.GetComponent<Torretta>().enabled = true;
             }
-            */
+            
             //Snap
             selectedObj.transform.position = InputSystem.current.ReadMouse(placeableMask) + Vector3.up;
             
@@ -70,14 +74,16 @@ public class PlaceableSystem : MonoBehaviour
         }
     }
 
-    public void SetTorretta(GameObject torretta)
+    public void SetTorretta(ScriptableTorretta torrettaType)
     {
         selectedObj = Instantiate(torretta, GetCellPosition(InputSystem.current.ReadMouse(placeableMask)), Quaternion.identity);
+        selectedObj.GetComponent<Torretta>().BehaviourTorretta = torrettaType;
     }
 
     private void FollowMouse()
     {
-        selectedObj.transform.DOMove(GetCellPosition(InputSystem.current.ReadMouse(placeableMask) + Vector3.up), 0.1f, true);
+        //selectedObj.transform.DOMove(GetCellPosition(InputSystem.current.ReadMouse(placeableMask)), 0.1f, true);
+        selectedObj.transform.position = GetCellPosition(InputSystem.current.ReadMouse(placeableMask));
     }
 
     private void PlaceObj()

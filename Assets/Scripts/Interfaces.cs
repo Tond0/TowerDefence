@@ -5,7 +5,5 @@ using UnityEngine;
 
 public interface IShoot
 {
-    public GameObject proiettile { get; }
-
-    public void Shoot(Transform target, float fireRate, float danno);
+    public void Shoot(Transform target, Transform torretta);
 }

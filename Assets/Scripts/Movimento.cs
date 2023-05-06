@@ -21,7 +21,7 @@ public class Movimento
 
     public void ConfigurazionePercorso(float velocita)
     {
-        sequenza.Append(transform_entity.DOPath(destinazioni, velocita, PathType.Linear, PathMode.Full3D, 1).OnWaypointChange(GuardaProssimaDestinazione));
+        sequenza.Append(transform_entity.DOPath(destinazioni, velocita, PathType.Linear, PathMode.Full3D, 1).OnWaypointChange(GuardaProssimaDestinazione).SetEase(Ease.Linear));
     }
 
     private void GuardaProssimaDestinazione(int waypoint)

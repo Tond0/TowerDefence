@@ -18,20 +18,20 @@ public class Entity : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        //movimento_entity = new Movimento(ConvertiDestinazioni(), transform);
+        movimento_entity = new Movimento(ConvertiDestinazioni(), transform);
 
-        //movimento_entity.ConfigurazionePercorso(durata_percorso);
+        movimento_entity.ConfigurazionePercorso(durata_percorso);
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (/*movimento_entity.finito ||*/ PV <= 0)
+        if (movimento_entity.finito || PV <= 0)
             Destroy(gameObject);
         
 
 
-        //movimento_entity.Muovi();
+        movimento_entity.Muovi();
     }
 
     //DoPath non accetta il transform quindi devo convertire in vector2
