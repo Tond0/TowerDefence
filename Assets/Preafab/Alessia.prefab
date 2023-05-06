@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 6901600120657178878}
   - component: {fileID: 6901600120657178879}
   - component: {fileID: 6901600120657178848}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Alessia
   m_TagString: Untagged
   m_Icon: {fileID: 3443629218296621865, guid: 0000000000000000d000000000000000, type: 0}
@@ -108,13 +108,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 712b115797d864a488820e29664695c4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  durata_percorso: 10
-  destinazioni:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  PV: 0
+  danno: 0

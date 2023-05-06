@@ -29,7 +29,6 @@ public class InputSystem : MonoBehaviour
     #endregion
 
 
-
     public Vector3 ReadMouse(LayerMask mask)
     {
         Ray mouseRay = Camera.main.ScreenPointToRay(Input.mousePosition);

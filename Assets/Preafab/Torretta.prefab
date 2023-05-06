@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 1078851072422348373}
   - component: {fileID: 2313136357611736064}
   - component: {fileID: 5226232939043357248}
+  - component: {fileID: 3871089431442142602}
   m_Layer: 7
   m_Name: Torretta
   m_TagString: Untagged
@@ -95,3 +96,16 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &3871089431442142602
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5672146084578347430}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 01fb47e8d9a93b549bc69962e035bc80, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  raggio: 0

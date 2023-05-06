@@ -7,7 +7,5 @@ public interface IShoot
 {
     public GameObject proiettile { get; }
 
-    public Color coloreTorretta { get; }
-
-    public void Shoot();
+    public void Shoot(Transform target, float fireRate, float danno);
 }
