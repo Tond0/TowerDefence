@@ -48,14 +48,11 @@ public class PlaceableSystem : MonoBehaviour
     private Vector3 previousCellLocation;
     private void Update()
     {
-        //Debug.Log(main_tilemap.getce(Vector3Int.FloorToInt(InputSystem.current.ReadMouse(placeableMask))));
-
-        if (main_tilemap.GetTile(Vector3Int.FloorToInt(InputSystem.current.ReadMouse(placeableMask)))) return;
-
         #region PreviewTile
         main_tilemap.SetTile(main_tilemap.WorldToCell(previousCellLocation), null);
 
-        previousCellLocation = GetCellPosition(InputSystem.current.ReadMouse(placeableMask));
+        if(InputSystem.current.ReadMouse(placeableMask) != Vector3.zero)
+            previousCellLocation = GetCellPosition(InputSystem.current.ReadMouse(placeableMask));
 
         main_tilemap.SetTile(main_tilemap.WorldToCell(previousCellLocation), previewTile);
         #endregion
@@ -66,18 +63,46 @@ public class PlaceableSystem : MonoBehaviour
         }
         else if (InputSystem.current.ReadInteractButtonUp() && selectedObj != null)
         {
-
-            if (GetCellPosition(InputSystem.current.ReadMouse(placeableMask)) != Vector3.zero)
+            if (InputSystem.current.ReadMouse(placeableMask) != Vector3.zero)
             {
                 selectedObj.GetComponent<Torretta>().enabled = true;
-            }
+                if (IsCellOccupied(GetCellPosition(InputSystem.current.ReadMouse(placeableMask))) != null)
+                {
+                    ColumManager colonna = IsCellOccupied(GetCellPosition(InputSystem.current.ReadMouse(placeableMask)));
 
-            //Snap
-            selectedObj.transform.position = InputSystem.current.ReadMouse(placeableMask) + Vector3.up;
+                    Vector3 posInColumn = new Vector3(1, colonna.AddToColumn(), 1);
+                    //Se può essere messo in colonna
+                    if (posInColumn.y == 0)
+                    {
+                        //Snap
+                        selectedObj.transform.position = GetCellPosition(InputSystem.current.ReadMouse(placeableMask)) + posInColumn;
+                    }
+                }
+                else
+                {
+                    //Snap
+                    selectedObj.transform.position = GetCellPosition(InputSystem.current.ReadMouse(placeableMask));
+                }
+            }
+            else
+            {
+                Destroy(selectedObj);
+            }
 
             selectedObj = null;
         }
         
+    }
+
+    //TODO: Si scrive davvero occupied?
+    private ColumManager IsCellOccupied(Vector3 origin)
+    {
+        if(Physics.Raycast(origin, Vector3.up,out RaycastHit hitObj, 1, objMask))
+        {
+            hitObj.transform.TryGetComponent<ColumManager>(out ColumManager columManager);
+            return columManager;
+        }
+        return null;
     }
 
     public void SetTorretta(ScriptableTorretta torrettaType)
@@ -89,17 +114,12 @@ public class PlaceableSystem : MonoBehaviour
     private void FollowMouse()
     {
         //selectedObj.transform.DOMove(GetCellPosition(InputSystem.current.ReadMouse(placeableMask)), 0.1f, true);
-        selectedObj.transform.position = GetCellPosition(InputSystem.current.ReadMouse(placeableMask));
+        if(InputSystem.current.ReadMouse(placeableMask) != Vector3.zero)
+            selectedObj.transform.position = GetCellPosition(InputSystem.current.ReadMouse(placeableMask));
     }
 
     private void PlaceObj()
     {
         selectedObj.transform.DOMove(GetCellPosition(InputSystem.current.ReadMouse(placeableMask)), 0.5f);
     }
-
-    private void ShowPreviewObj()
-    {
-        
-    }
-
 }

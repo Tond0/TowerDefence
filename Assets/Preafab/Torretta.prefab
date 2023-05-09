@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 2313136357611736064}
   - component: {fileID: 5226232939043357248}
   - component: {fileID: 3871089431442142602}
-  m_Layer: 7
+  m_Layer: 6
   m_Name: Torretta
   m_TagString: Untagged
   m_Icon: {fileID: 0}

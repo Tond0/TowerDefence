@@ -7,3 +7,8 @@ public interface IShoot
 {
     public void Shoot(Transform target, Transform torretta);
 }
+
+public interface IPlaceable
+{
+
+}

@@ -32,4 +32,16 @@ public class Torretta : MonoBehaviour
             }
         }
     }
+
+    private void OnMouseEnter()
+    {
+        TryGetComponent<MeshRenderer>(out MeshRenderer mesh);
+        mesh.material.color = Color.yellow;
+    }
+
+    private void OnMouseExit()
+    {
+        TryGetComponent<MeshRenderer>(out MeshRenderer mesh);
+        mesh.material.color = Color.white;
+    }
 }
