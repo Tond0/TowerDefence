@@ -66,14 +66,17 @@ public class PlaceableSystem : MonoBehaviour
             if (InputSystem.current.ReadMouse(placeableMask) != Vector3.zero)
             {
                 selectedObj.GetComponent<Torretta>().enabled = true;
-                if (IsCellOccupied(GetCellPosition(InputSystem.current.ReadMouse(placeableMask))) != null)
-                {
-                    ColumManager colonna = IsCellOccupied(GetCellPosition(InputSystem.current.ReadMouse(placeableMask)));
 
-                    Vector3 posInColumn = new Vector3(1, colonna.AddToColumn(), 1);
+                ColumManager colonna = IsCellOccupied(GetCellPosition(InputSystem.current.ReadMouse(placeableMask)));
+
+                if (colonna)
+                {
+                    Vector3 posInColumn = new Vector3(0, colonna.AddToColumn(), 0);
+                    Debug.Log(posInColumn);
                     //Se può essere messo in colonna
                     if (posInColumn.y == 0)
                     {
+                        Debug.Log("Vai sopra");
                         //Snap
                         selectedObj.transform.position = GetCellPosition(InputSystem.current.ReadMouse(placeableMask)) + posInColumn;
                     }
@@ -81,7 +84,9 @@ public class PlaceableSystem : MonoBehaviour
                 else
                 {
                     //Snap
-                    selectedObj.transform.position = GetCellPosition(InputSystem.current.ReadMouse(placeableMask));
+                    selectedObj.transform.position = GetCellPosition(InputSystem.current.ReadMouse(placeableMask)) + Vector3.up / 2;
+
+                    selectedObj.AddComponent<ColumManager>();
                 }
             }
             else
@@ -97,11 +102,15 @@ public class PlaceableSystem : MonoBehaviour
     //TODO: Si scrive davvero occupied?
     private ColumManager IsCellOccupied(Vector3 origin)
     {
-        if(Physics.Raycast(origin, Vector3.up,out RaycastHit hitObj, 1, objMask))
+        Debug.DrawLine(origin, origin + Vector3.up * 4, Color.black, 10);
+        Collider[] colliders = Physics.OverlapBox(origin, new Vector3(0.1f,0.1f,0.1f), Quaternion.identity, objMask);
+        if (colliders.Length > 0)
         {
-            hitObj.transform.TryGetComponent<ColumManager>(out ColumManager columManager);
+            colliders[0].transform.TryGetComponent<ColumManager>(out ColumManager columManager);
             return columManager;
         }
+        Debug.Log("Vuoto");
+        Debug.DrawRay(origin, Vector3.up, Color.red, 1);
         return null;
     }
 
@@ -115,7 +124,7 @@ public class PlaceableSystem : MonoBehaviour
     {
         //selectedObj.transform.DOMove(GetCellPosition(InputSystem.current.ReadMouse(placeableMask)), 0.1f, true);
         if(InputSystem.current.ReadMouse(placeableMask) != Vector3.zero)
-            selectedObj.transform.position = GetCellPosition(InputSystem.current.ReadMouse(placeableMask));
+            selectedObj.transform.position = GetCellPosition(InputSystem.current.ReadMouse(placeableMask)) + Vector3.up * 5;
     }
 
     private void PlaceObj()

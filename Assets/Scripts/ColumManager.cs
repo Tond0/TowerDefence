@@ -5,9 +5,9 @@ using UnityEngine;
 public class ColumManager : MonoBehaviour
 {
     [SerializeField] private IPlaceable[] placeables = new IPlaceable[4];
-    public int maxItem;
+    public int maxItem = 4;
     //Parte da uno contando se stesso
-    private int ItemInColumn = 1;
+    private int ItemInColumn = 0;
 
     public int AddToColumn()
     {
