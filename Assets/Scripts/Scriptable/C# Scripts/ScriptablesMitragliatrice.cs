@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -11,7 +12,7 @@ public class ScriptablesMitragliatrice : ScriptableTorretta
     private float timeRemainingShoot;
     private float timeRemainingReload;
     private float reaminingAmmo;
-    public override void Shoot(Transform torretta, Transform target)
+    public override void Shoot(Transform torretta, Transform target, float actualDamage, float actualFire_rate)
     {
         if (reaminingAmmo > 0)
         {
@@ -26,11 +27,11 @@ public class ScriptablesMitragliatrice : ScriptableTorretta
                 torretta.LookAt(target.position);
 
                 target.TryGetComponent<Entity>(out Entity enemy);
-                enemy.PV -= danno;
+                enemy.PV -= actualDamage;
 
                 #endregion
 
-                timeRemainingShoot = fire_rate;
+                timeRemainingShoot = actualFire_rate;
                 reaminingAmmo--;
             }
         }

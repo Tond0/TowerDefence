@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -7,7 +8,7 @@ public class ScriptableArea : ScriptableTorretta
 {
     public float raggio_impatto;
     private float timeRemaining;
-    public override void Shoot(Transform torretta, Transform target)
+    public override void Shoot(Transform torretta, Transform target, float actualDamage, float actualFire_rate)
     {
         if (timeRemaining > 0)
         {
@@ -23,12 +24,12 @@ public class ScriptableArea : ScriptableTorretta
             foreach(Collider enemy in colliders)
             {
                 enemy.TryGetComponent<Entity>(out Entity enemyScript);
-                if(enemyScript != null)
-                    enemyScript.PV -= danno;
+                if (enemyScript != null)
+                    enemyScript.PV -= actualDamage;
             }
             #endregion
 
-            timeRemaining = fire_rate;
+            timeRemaining = actualFire_rate;
         }
     }
 }

@@ -6,7 +6,7 @@ using UnityEngine;
 public class ScriptablesColpoSingolo : ScriptableTorretta
 {
     private float timeRemaining;
-    public override void Shoot(Transform torretta, Transform target)
+    public override void Shoot(Transform torretta, Transform target, float actualDamage, float actualFire_rate)
     {
         if (timeRemaining > 0)
         {
@@ -19,11 +19,12 @@ public class ScriptablesColpoSingolo : ScriptableTorretta
             torretta.LookAt(target.position);
 
             target.TryGetComponent<Entity>(out Entity enemy);
-            enemy.PV -= danno;
+
+            enemy.PV -= actualDamage;
 
             #endregion
 
-            timeRemaining = fire_rate;
+            timeRemaining = actualFire_rate;
         }
     }
 }

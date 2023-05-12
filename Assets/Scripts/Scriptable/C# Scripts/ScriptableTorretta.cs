@@ -11,5 +11,5 @@ public abstract class ScriptableTorretta : ScriptableObject
     public float danno;
     public float fire_rate;
 
-    public virtual void Shoot(Transform target, Transform torretta) { }
+    public virtual void Shoot(Transform target, Transform torretta, float actualDamage, float actualFire_rate) { }
 }

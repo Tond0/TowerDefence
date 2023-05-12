@@ -4,15 +4,17 @@ using UnityEngine;
 
 public class ColumnManager : MonoBehaviour
 {
-    [SerializeField] private IPlaceable[] placeables = new IPlaceable[4];
     public int maxItem = 4;
     //Parte da uno contando se stesso
-    private int ItemInColumn = 0;
+    public int ItemInColumn = 0;
 
-    public int AddToColumn()
+    public Torretta[] torrete = new Torretta[4];
+
+    public int AddToColumn(Torretta torretta)
     {
         if (ItemInColumn < maxItem)
         {
+            torrete[ItemInColumn] = torretta;
             ItemInColumn++;
             return ItemInColumn;
         }

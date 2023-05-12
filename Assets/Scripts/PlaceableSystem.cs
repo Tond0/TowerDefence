@@ -10,16 +10,15 @@ public class PlaceableSystem : MonoBehaviour
 {
     [SerializeField] private Tilemap main_tilemap;
     [SerializeField] private Grid main_palette;
+    [SerializeField] private Tile previewTile;
+    [SerializeField] private Tile pathTile;
 
     [SerializeField] private GameObject columnManger;
     [SerializeField] private GameObject torretta;
     [SerializeField] private GameObject buffer;
 
     [SerializeField] private GameObject selectedObj;
-    [SerializeField] private Tile previewTile;
-    [SerializeField] private Tile pathTile;
 
-    [SerializeField] private List<GameObject> placeableObjects;
     [SerializeField] private LayerMask groundMask;
     [SerializeField] private LayerMask objMask;
     [SerializeField] private LayerMask columnMask;
@@ -40,9 +39,7 @@ public class PlaceableSystem : MonoBehaviour
 
     private void OnEnable()
     {
-        #region SetUpPreviewObj
-        placeableObjects.Insert(0, null);
-        #endregion
+
     }
 
     private Vector3 previousCellLocation;
@@ -73,32 +70,52 @@ public class PlaceableSystem : MonoBehaviour
                 //Cerchiamo di ottenere il columnManager presente in quella cella
                 ColumnManager colonna = IsCellOccupied(GetCellPosition(InputSystem.current.ReadMouse(groundMask)));
 
+                selectedObj.TryGetComponent<Torretta>(out Torretta torretta);
+                selectedObj.TryGetComponent<Buffer>(out Buffer buffer);
+
                 //Se c'è già una columnManager (c'è già uno o più oggetti posizionabili in quella cella)
                 if (colonna != null)
                 {
-                    Vector3 posInColumn = new Vector3(0, colonna.AddToColumn(), 0);
-                    Debug.Log(posInColumn);
+                    Vector3 posInColumn = new Vector3(0, colonna.AddToColumn(torretta) - 1, 0);
+
                     //Se può essere messo in colonna
-                    if (posInColumn.y != 0)
+                    if (posInColumn.y != -1)
                     {
-                        Debug.Log("Vai sopra");
                         //Snap
-                        selectedObj.transform.position = GetCellPosition(InputSystem.current.ReadMouse(groundMask)) + posInColumn + Vector3.up / 2;
+                        selectedObj.transform.SetParent(colonna.gameObject.transform);
+                        selectedObj.transform.localPosition = Vector3.zero + posInColumn;
+
+                        if (buffer)
+                            buffer.orderInColumn = colonna.ItemInColumn - 1;
                     }
+                    //Se non c'è più spazio allora si annulla l'azione
                     else
                     {
                         Destroy(selectedObj);
                     }
                 }
-                else
+                else if(colonna == null && !selectedObj.TryGetComponent<Buffer>(out Buffer whoCares))
                 {
                     //Spawn del columnManager
                     GameObject spawnedColumn = Instantiate(columnManger, GetCellPosition(InputSystem.current.ReadMouse(groundMask)) + Vector3.up / 2, Quaternion.identity);
                     selectedObj.transform.SetParent(spawnedColumn.transform);
+
+                    spawnedColumn.GetComponent<ColumnManager>().AddToColumn(torretta);
+
                     selectedObj.transform.localPosition = Vector3.zero;
                 }
+                else
+                {
+                    Destroy(selectedObj);
+                    selectedObj = null;
+                    return;
+                }
 
-                selectedObj.GetComponent<Torretta>().enabled = true;
+                if (torretta)
+                    torretta.enabled = true;
+                else
+                    buffer.enabled = true;
+
             }
             #endregion
 
@@ -133,16 +150,17 @@ public class PlaceableSystem : MonoBehaviour
         selectedObj = Instantiate(torretta, GetCellPosition(InputSystem.current.ReadMouse(groundMask)), Quaternion.identity);
         selectedObj.GetComponent<Torretta>().BehaviourTorretta = torrettaType;
     }
+    public void SetBuffer(ScriptableBuffer bufferType)
+    {
+        selectedObj = Instantiate(buffer, GetCellPosition(InputSystem.current.ReadMouse(groundMask)), Quaternion.identity);
+        selectedObj.GetComponent<Buffer>().BehaviourBuffer = bufferType;
+    }
 
     private void FollowMouse()
     {
         //selectedObj.transform.DOMove(GetCellPosition(InputSystem.current.ReadMouse(placeableMask)), 0.1f, true);
+
         if(InputSystem.current.ReadMouse(groundMask) != Vector3.zero)
             selectedObj.transform.position = GetCellPosition(InputSystem.current.ReadMouse(groundMask)) + Vector3.up * 5;
-    }
-
-    private void PlaceObj()
-    {
-        selectedObj.transform.DOMove(GetCellPosition(InputSystem.current.ReadMouse(groundMask)), 0.5f);
     }
 }
