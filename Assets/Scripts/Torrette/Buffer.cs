@@ -2,31 +2,48 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.Animations;
 
-public class Buffer : MonoBehaviour, IPlaceable
+public enum StatusBuffer { Attiva, Disattiva }
+
+
+public class Buffer
 {
-    public ScriptableBuffer BehaviourBuffer;
-    public int orderInColumn;
+    readonly Transform transformObj;
+    readonly ScriptableBuffer BehaviourBuffer;
+    readonly int orderInColumn;
 
-    private void OnEnable()
+    public Buffer(Transform transformObj, ScriptableBuffer BehaviourBuffer, int posInColumn)
     {
-        transform.parent.TryGetComponent<ColumnManager>(out ColumnManager colonna);
-        for(int i = 0; i < orderInColumn; i++)
+        this.transformObj = transformObj;
+        this.BehaviourBuffer = BehaviourBuffer;
+        this.orderInColumn = posInColumn;
+    }
+
+    public void BuffDebuff(StatusBuffer status)
+    {
+        int buffOrDebuf = status == StatusBuffer.Attiva ? 1 : -1;
+
+        transformObj.parent.TryGetComponent<ColumnManager>(out ColumnManager colonna);
+
+        for (int i = 0; i < orderInColumn; i++)
         {
+
             if (colonna.torrete[i] == null) return;
 
             switch (BehaviourBuffer.type)
             {
                 case ScriptableBuffer.TipoBuffer.Damage:
-                    colonna.torrete[i].dannoApp += BehaviourBuffer.buffValue;
+                    colonna.torrete[i].dannoApp += BehaviourBuffer.buffValue * buffOrDebuf;
                     break;
                 case ScriptableBuffer.TipoBuffer.Fire_Rate:
-                    colonna.torrete[i].fire_rateApp -= BehaviourBuffer.buffValue;
+                    colonna.torrete[i].fire_rateApp -= BehaviourBuffer.buffValue * buffOrDebuf;
                     break;
                 case ScriptableBuffer.TipoBuffer.Range:
-                    colonna.torrete[i].raggioApp += BehaviourBuffer.buffValue;
+                    colonna.torrete[i].raggioApp += BehaviourBuffer.buffValue * buffOrDebuf;
                     break;
             }
+
         }
     }
 }

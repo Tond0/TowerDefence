@@ -34,7 +34,7 @@ public class Entity : MonoBehaviour
         movimento_entity.Muovi();
     }
 
-    //DoPath non accetta il transform quindi devo convertire in vector2
+    //DoPath non accetta il transformObj quindi devo convertire in vector2
     private Vector3[] ConvertiDestinazioni()
     {
         Vector3[] destinazione_vet = new Vector3[destinazioni.Length];

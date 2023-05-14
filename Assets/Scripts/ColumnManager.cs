@@ -1,10 +1,11 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class ColumnManager : MonoBehaviour
 {
-    public int maxItem = 4;
+    public int maxItems = 4;
     //Parte da uno contando se stesso
     public int ItemInColumn = 0;
 
@@ -12,7 +13,7 @@ public class ColumnManager : MonoBehaviour
 
     public int AddToColumn(Torretta torretta)
     {
-        if (ItemInColumn < maxItem)
+        if (ItemInColumn < maxItems)
         {
             torrete[ItemInColumn] = torretta;
             ItemInColumn++;

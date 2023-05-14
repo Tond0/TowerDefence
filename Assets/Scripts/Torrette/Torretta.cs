@@ -3,63 +3,37 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Torretta : MonoBehaviour, IPlaceable
+public class Torretta
 {
-    public ScriptableTorretta BehaviourTorretta;
-    [SerializeField] private LayerMask nemicoMask;
-    public Buffer buffer;
+    readonly Transform transformObj;
+    readonly ScriptableTorretta BehaviourTorretta;
+    readonly LayerMask nemicoMask;
 
-    [NonSerialized] public float raggioApp;
-    [NonSerialized] public float dannoApp;
-    [NonSerialized] public float fire_rateApp;
+    public float raggioApp { get; set; }
+    public float dannoApp { get; set; }
+    public float fire_rateApp { get; set; }
 
-    private void OnEnable()
+    public Torretta(Transform transformObj, ScriptableTorretta BehaviourTorretta, LayerMask nemicoMask)
     {
+        this.transformObj = transformObj;
+        this.BehaviourTorretta = BehaviourTorretta;
+        this.nemicoMask = nemicoMask;
+
         raggioApp = BehaviourTorretta.raggio;
         dannoApp = BehaviourTorretta.danno;
         fire_rateApp = BehaviourTorretta.fire_rate;
     }
 
-    // Update is called once per frame
-    void FixedUpdate()
+    public void DoActive()
     {
         if (TargetSearch().Length > 0)
         {
-            BehaviourTorretta.Shoot(transform, TargetSearch()[0].transform, dannoApp, fire_rateApp);
+            BehaviourTorretta.Shoot(transformObj, TargetSearch()[0].transform, dannoApp, fire_rateApp);
         }
     }
 
     private Collider[] TargetSearch()
     {
-        if(buffer && buffer.BehaviourBuffer.type == ScriptableBuffer.TipoBuffer.Range)
-            return Physics.OverlapSphere(transform.position, BehaviourTorretta.raggio + buffer.BehaviourBuffer.buffValue, nemicoMask);
-        else
-            return Physics.OverlapSphere(transform.position, BehaviourTorretta.raggio, nemicoMask);
-    }
-    private void OnDrawGizmos()
-    {
-        if (BehaviourTorretta != null)
-        {
-            Gizmos.color = Color.red;
-            Gizmos.DrawWireSphere(transform.position, raggioApp);
-            if(BehaviourTorretta.GetType() == typeof(ScriptableArea)) 
-            {
-                ScriptableArea areaAppoggio = (ScriptableArea)BehaviourTorretta;
-                Gizmos.color = Color.yellow;
-                Gizmos.DrawWireSphere(transform.position, areaAppoggio.raggio_impatto);
-            }
-        }
-    }
-
-    private void OnMouseEnter()
-    {
-        TryGetComponent<MeshRenderer>(out MeshRenderer mesh);
-        mesh.material.color = Color.yellow;
-    }
-
-    private void OnMouseExit()
-    {
-        TryGetComponent<MeshRenderer>(out MeshRenderer mesh);
-        mesh.material.color = Color.white;
+        return Physics.OverlapSphere(transformObj.position, raggioApp, nemicoMask);
     }
 }

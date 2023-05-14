@@ -8,20 +8,21 @@ using UnityEditor;
 
 public class PlaceableSystem : MonoBehaviour
 {
+    [Header("Tilemap Settings")]
     [SerializeField] private Tilemap main_tilemap;
-    [SerializeField] private Grid main_palette;
     [SerializeField] private Tile previewTile;
-    [SerializeField] private Tile pathTile;
 
+    [Header("Prefabs Settings")]
     [SerializeField] private GameObject columnManger;
-    [SerializeField] private GameObject torretta;
-    [SerializeField] private GameObject buffer;
+    [SerializeField] private GameObject placeableObj;
 
-    [SerializeField] private GameObject selectedObj;
-
+    [Header("Masks Settings")]
     [SerializeField] private LayerMask groundMask;
     [SerializeField] private LayerMask objMask;
     [SerializeField] private LayerMask columnMask;
+
+    [Header("Debug Settings")]
+    [SerializeField] private GameObject selectedObj;
 
     #region Preview location
     private Vector3Int cellPosition;
@@ -36,11 +37,6 @@ public class PlaceableSystem : MonoBehaviour
         main_tilemap.SetTile(cellPosition, newTile);
     }
     #endregion
-
-    private void OnEnable()
-    {
-
-    }
 
     private Vector3 previousCellLocation;
     private void Update()
@@ -70,13 +66,12 @@ public class PlaceableSystem : MonoBehaviour
                 //Cerchiamo di ottenere il columnManager presente in quella cella
                 ColumnManager colonna = IsCellOccupied(GetCellPosition(InputSystem.current.ReadMouse(groundMask)));
 
-                selectedObj.TryGetComponent<Torretta>(out Torretta torretta);
-                selectedObj.TryGetComponent<Buffer>(out Buffer buffer);
-
+                selectedObj.TryGetComponent<Placeable>(out Placeable placeableScript);
+                
                 //Se c'è già una columnManager (c'è già uno o più oggetti posizionabili in quella cella)
                 if (colonna != null)
                 {
-                    Vector3 posInColumn = new Vector3(0, colonna.AddToColumn(torretta) - 1, 0);
+                    Vector3 posInColumn = new Vector3(0, colonna.AddToColumn(placeableScript.torretta) - 1, 0);
 
                     //Se può essere messo in colonna
                     if (posInColumn.y != -1)
@@ -85,37 +80,37 @@ public class PlaceableSystem : MonoBehaviour
                         selectedObj.transform.SetParent(colonna.gameObject.transform);
                         selectedObj.transform.localPosition = Vector3.zero + posInColumn;
 
+                        /* TODO: Non ricordo a cosa serviva
                         if (buffer)
                             buffer.orderInColumn = colonna.ItemInColumn - 1;
+                        */
                     }
                     //Se non c'è più spazio allora si annulla l'azione
                     else
                     {
                         Destroy(selectedObj);
+                        return;
                     }
                 }
-                else if(colonna == null && !selectedObj.TryGetComponent<Buffer>(out Buffer whoCares))
+                //Se non ci sono altri blocchi e stiamo piazzando una torretta...
+                else if(colonna == null && placeableScript.BehaviourTorretta != null)
                 {
                     //Spawn del columnManager
                     GameObject spawnedColumn = Instantiate(columnManger, GetCellPosition(InputSystem.current.ReadMouse(groundMask)) + Vector3.up / 2, Quaternion.identity);
+
                     selectedObj.transform.SetParent(spawnedColumn.transform);
 
-                    spawnedColumn.GetComponent<ColumnManager>().AddToColumn(torretta);
+                    spawnedColumn.GetComponent<ColumnManager>().AddToColumn(placeableScript.torretta);
 
                     selectedObj.transform.localPosition = Vector3.zero;
                 }
                 else
                 {
                     Destroy(selectedObj);
-                    selectedObj = null;
                     return;
                 }
 
-                if (torretta)
-                    torretta.enabled = true;
-                else
-                    buffer.enabled = true;
-
+                placeableScript.EnablePlaceable();
             }
             #endregion
 
@@ -123,6 +118,7 @@ public class PlaceableSystem : MonoBehaviour
             else
             {
                 Destroy(selectedObj);
+                return;
             }
             #endregion
 
@@ -138,27 +134,28 @@ public class PlaceableSystem : MonoBehaviour
         Debug.DrawLine(origin, origin + Vector3.up * 5, Color.black, 10);
         if (Physics.Raycast(origin, Vector3.up, out RaycastHit raycastHit, 2, columnMask))
         {
-            Debug.Log("Beccato");
             return raycastHit.transform.GetComponent<ColumnManager>();
         }
-        Debug.Log("Vuoto");
         return null;
     }
 
     public void SetTorretta(ScriptableTorretta torrettaType)
     {
-        selectedObj = Instantiate(torretta, GetCellPosition(InputSystem.current.ReadMouse(groundMask)), Quaternion.identity);
-        selectedObj.GetComponent<Torretta>().BehaviourTorretta = torrettaType;
+        selectedObj = Instantiate(placeableObj, GetCellPosition(InputSystem.current.ReadMouse(groundMask)), Quaternion.identity);
+        selectedObj.GetComponent<Placeable>().BehaviourTorretta = torrettaType;
+        selectedObj.GetComponent<Placeable>().DoSetUp();
     }
     public void SetBuffer(ScriptableBuffer bufferType)
     {
-        selectedObj = Instantiate(buffer, GetCellPosition(InputSystem.current.ReadMouse(groundMask)), Quaternion.identity);
-        selectedObj.GetComponent<Buffer>().BehaviourBuffer = bufferType;
+        selectedObj = Instantiate(placeableObj, GetCellPosition(InputSystem.current.ReadMouse(groundMask)), Quaternion.identity);
+        selectedObj.GetComponent<Placeable>().BehaviourBuffer = bufferType;
+        selectedObj.GetComponent<Placeable>().DoSetUp();
     }
 
     private void FollowMouse()
     {
-        //selectedObj.transform.DOMove(GetCellPosition(InputSystem.current.ReadMouse(placeableMask)), 0.1f, true);
+        //Non era preciso purtroppo T.T
+        //selectedObj.transformObj.DOMove(GetCellPosition(InputSystem.current.ReadMouse(placeableMask)), 0.1f, true);
 
         if(InputSystem.current.ReadMouse(groundMask) != Vector3.zero)
             selectedObj.transform.position = GetCellPosition(InputSystem.current.ReadMouse(groundMask)) + Vector3.up * 5;

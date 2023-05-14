@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: Fire_rate
   m_EditorClassIdentifier: 
   type: 0
-  buffValue: 2
+  buffValue: 0.5
