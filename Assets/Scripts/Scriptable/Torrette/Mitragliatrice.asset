@@ -16,4 +16,4 @@ MonoBehaviour:
   danno: 2
   fire_rate: 0.2
   maxAmmo: 5
-  reloadTime: 3
+  reloadTime: 4

@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: Danno
   m_EditorClassIdentifier: 
   type: 1
-  buffValue: 5
+  buffValue: 2

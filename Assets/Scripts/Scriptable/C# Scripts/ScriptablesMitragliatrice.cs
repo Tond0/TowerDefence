@@ -14,6 +14,7 @@ public class ScriptablesMitragliatrice : ScriptableTorretta
     private float reaminingAmmo;
     public override void Shoot(Transform torretta, Transform target, float actualDamage, float actualFire_rate)
     {
+        Debug.Log("Shoot");
         if (reaminingAmmo > 0)
         {
             if (timeRemainingShoot > 0)
